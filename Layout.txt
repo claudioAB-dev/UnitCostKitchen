@@ -1,0 +1,24 @@
+proyecto/
+├── .git/
+├── venv/
+├── src/
+│   └── mi_paquete/
+│       ├── __init__.py
+│       ├── modulo1.py
+│       └── subpaquete/
+│           └── modulo2.py
+├── tests/
+│   └── test_modulo1.py
+│   └── test_subpaquete/
+│       └── test_modulo2.py
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   └── external/
+├── notebooks/
+├── docs/
+├── requirements.txt
+├── setup.py
+├── pyproject.toml
+├── README.md
+└── .gitignore
