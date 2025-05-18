@@ -1,0 +1,137 @@
+Modelo,Descripcion_Catalogo,Precio,Ancho_Mueble_LadoA_cm,Altura_Mueble_cm,Fondo_Mueble_cm,Num_Puertas_T1,Ancho_Puerta_T1_cm,Alto_Puerta_T1_cm,Num_Puertas_T2,Ancho_Puerta_T2_cm,Alto_Puerta_T2_cm,Num_Cajones_T1,Ancho_Frente_Cajon_T1_cm,Alto_Frente_Cajon_T1_cm,Num_Cajones_T2,Ancho_Frente_Cajon_T2_cm,Alto_Frente_Cajon_T2_cm,Observaciones_Mueble
+AM60,alacena para microondas,513.62,60,45,50,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,No lleva puertas o frente
+AM70,alacena para microondas,557.48,70,45,50,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,No lleva puertas o frente
+AMC456,alacena cuadrada para microondas,468.34,60,45,50,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,No lleva puertas o frente
+AMC457,alacena cuadrada para microondas,513.62,70,45,50,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,No lleva puertas o frente
+AME76,alacena entrepaño para microondas,636.72,60,70,50,2,29.8,24.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Puertas necesarias parte superior.
+AME77,alacena entrepaño para microondas,698.97,70,70,50,2,34.8,24.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Puertas necesarias parte superior.
+AC355,alacena campana,329.68,50,35,30,1,49.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AC356,alacena campana,367.88,60,35,30,2,29.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AC357,alacena campana,401.84,70,35,30,2,34.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AC358,alacena campana,442.87,80,35,30,2,39.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AC359,alacena campana,476.83,90,35,30,2,44.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AC3510,alacena campana,517.86,100,35,30,2,49.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AR355,alacena refrigerador,532.01,50,35,60,1,49.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AR356,alacena refrigerador,592.85,60,35,60,2,29.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AR357,alacena refrigerador,653.7,70,35,60,2,34.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AR358,alacena refrigerador,711.71,80,35,60,2,39.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AR359,alacena refrigerador,772.55,90,35,60,2,44.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AR3510,alacena refrigerador,827.73,100,35,60,2,49.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,(Modelo AR351 en catálogo)
+AE53,alacena entrepaño movible 52.5,338.17,30,52.5,30,1,29.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE535,alacena entrepaño movible 52.5,362.22,35,52.5,30,1,34.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE54,alacena entrepaño movible 52.5,384.86,40,52.5,30,1,39.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE545,alacena entrepaño movible 52.5,406.08,45,52.5,30,1,44.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE55,alacena entrepaño movible 52.5,431.55,50,52.5,30,1,49.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE56,alacena entrepaño movible 52.5,475.42,60,52.5,30,2,29.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE57,alacena entrepaño movible 52.5,513.62,70,52.5,30,2,34.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE58,alacena entrepaño movible 52.5,561.73,80,52.5,30,2,39.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE59,alacena entrepaño movible 52.5,605.59,90,52.5,30,2,44.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE510,alacena entrepaño movible 52.5,667.85,100,52.5,30,2,49.8,52.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE73,alacena entrepaño movible 70,424.48,30,70,30,1,29.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A6735,alacena entrepaño movible 70,452.78,35,70,30,1,34.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A74,alacena entrepaño movible 70,478.25,40,70,30,1,39.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A6745,alacena entrepaño movible 70,499.47,45,70,30,1,44.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A675,alacena entrepaño movible 70,527.77,50,70,30,1,49.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE76,alacena entrepaño movible 70,580.12,60,70,30,2,29.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE77,alacena entrepaño movible 70,645.21,70,70,30,2,34.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A678,alacena entrepaño movible 70,700.39,80,70,30,2,39.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A679,alacena entrepaño movible 70,749.91,90,70,30,2,44.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A6710,alacena entrepaño movible 70,783.87,100,70,30,2,49.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,"(Alto puerta 69.8 asumido, catálogo dice 6)"
+AR621P,alacena rinconera una puerta 70,969.23,64,70,30,1,44.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AR70,alacena rinconera dos puertas,888.57,62,70,30,2,29.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Este mueble utiliza bisagras especiales.
+AT73,alacena terminal redonda 70,318.36,30,70,30,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,No lleva puertas o frentes
+AEE76,alacena europea entrepaño fijo 2P,616.91,60,70,30,2,29.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,(Dimensiones de puerta corregidas a 29.8x34.8 c/u)
+AEE77,alacena europea entrepaño fijo 2P,684.82,70,70,30,2,34.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,(Dimensiones de puerta corregidas a 34.8x34.8 c/u)
+AEE78,alacena europea entrepaño fijo 2P,745.67,80,70,30,2,39.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,(Dimensiones de puerta corregidas a 39.8x34.8 c/u)
+AEE79,alacena europea entrepaño fijo 2P,806.51,90,70,30,2,44.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,(Dimensiones de puerta corregidas a 44.8x34.8 c/u)
+AEE710,alacena europea entrepaño fijo 2P,873.01,100,70,30,2,49.8,34.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,(Dimensiones de puerta corregidas a 49.8x34.8 c/u)
+A693,alacena entrepaño movible 90,492.39,30,90,30,1,29.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A6935,alacena entrepaño movible 90,516.45,35,90,30,1,34.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE94,alacena entrepaño movible 90,546.16,40,90,30,1,39.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A6945,alacena entrepaño movible 90,574.46,45,90,30,1,44.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A695,alacena entrepaño movible 90,608.42,50,90,30,1,49.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE96,alacena entrepaño movible 90,681.99,60,90,30,2,29.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE97,alacena entrepaño movible 90,737.18,70,90,30,2,34.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE98,alacena entrepaño movible 90,799.43,80,90,30,2,39.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+A699,alacena entrepaño movible 90,853.2,90,90,30,2,44.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AE91,alacena entrepaño movible 90,925.36,100,90,30,2,49.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+AR6290,alacena rinconera una puerta 90,1097.98,62,90,30,1,42.8,89.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE30,gabinete puerta-entrepaño,618.32,30,70,60,1,29.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE35,gabinete puerta-entrepaño,665.02,35,70,60,1,34.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE40,gabinete puerta-entrepaño,696.14,40,70,60,1,39.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE45,gabinete puerta-entrepaño,725.86,45,70,60,1,44.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE50,gabinete puerta-entrepaño,759.82,50,70,60,1,49.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE60,gabinete puerta-entrepaño,820.66,60,70,60,2,29.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE70,gabinete puerta-entrepaño,875.84,70,70,60,2,34.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE80,gabinete puerta-entrepaño,950.83,80,70,60,2,39.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE90,gabinete puerta-entrepaño,1001.77,90,70,60,2,44.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPE100,gabinete puerta-entrepaño,1065.44,100,70,60,2,49.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,
+GPC30,gabinete puerta cajón,836.22,30,70,60,1,29.8,52.3,0,NULL,NULL,1,29.8,17.3,0,NULL,NULL,
+GPC35,gabinete puerta cajón,882.91,35,70,60,1,34.8,52.3,0,NULL,NULL,1,34.8,17.3,0,NULL,NULL,
+GPC40,gabinete puerta cajón,926.78,40,70,60,1,39.8,52.3,0,NULL,NULL,1,39.8,17.3,0,NULL,NULL,
+GPC45,gabinete puerta cajón,970.64,45,70,60,1,44.8,52.3,0,NULL,NULL,1,44.8,17.3,0,NULL,NULL,
+GPC50,gabinete puerta cajón,1028.65,50,70,60,1,49.8,59.3,0,NULL,NULL,1,49.8,17.3,0,NULL,NULL,
+GPC60,gabinete puerta cajón,1112.13,60,70,60,2,29.8,52.3,0,NULL,NULL,1,59.8,17.3,0,NULL,NULL,
+GPC70,gabinete puerta cajón,1209.76,70,70,60,2,34.8,52.3,0,NULL,NULL,1,69.8,17.3,0,NULL,NULL,
+GPB15,gabinete botellero,500.88,15,70,60,1,14.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,(Considerado como 1 frente/puerta para el botellero)
+GPB20,gabinete botellero,537.67,20,70,60,1,19.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,(GP820 en cat.; Considerado como 1 frente/puerta)
+GPB25,gabinete botellero,577.29,25,70,60,1,24.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,(Considerado como 1 frente/puerta para el botellero)
+GP2C80,gabinete 2 puerta-2 cajones,1513.97,80,70,60,2,39.8,52.3,0,NULL,NULL,2,39.8,17.3,0,NULL,NULL,
+GP2C90,gabinete 2 puerta-2 cajones,1601.7,90,70,60,2,44.8,52.3,0,NULL,NULL,2,44.8,17.3,0,NULL,NULL,
+GP2C100,gabinete 2 puerta-2 cajones,1737.53,100,70,60,2,49.8,52.3,0,NULL,NULL,2,49.8,17.3,0,NULL,NULL,
+GC4C40,gabinete cajonero-4 cajones,1566.32,40,70,60,0,NULL,NULL,0,NULL,NULL,4,39.8,17.3,0,NULL,NULL,
+GC4C50,gabinete cajonero-4 cajones,1746.02,50,70,60,0,NULL,NULL,0,NULL,NULL,4,49.8,17.3,0,NULL,NULL,
+GC2C80,gabinete cacerolero 4 cajones,2336.04,80,70,60,0,NULL,NULL,0,NULL,NULL,2,39.8,17.3,2,79.8,26,
+GC2C90,gabinete cacerolero 4 cajones,2504.42,90,70,60,0,NULL,NULL,0,NULL,NULL,2,44.8,17.3,2,89.8,26,
+GC2C100,gabinete cacerolero 4 cajones,2664.31,100,70,60,0,NULL,NULL,0,NULL,NULL,2,49.8,17.3,2,99.8,26,
+GCL3C50,gabinete cacerolero 3 cajones,1596.04,50,70,60,0,NULL,NULL,0,NULL,NULL,1,49.8,17.3,2,49.8,26,"(1 cajón de 17.3 alto, 2 cajones de 26 alto)"
+GCL3C60,gabinete cacerolero 3 cajones,1757.34,60,70,60,0,NULL,NULL,0,NULL,NULL,1,59.8,17.3,2,59.8,26,"(1 cajón de 17.3 alto, 2 cajones de 26 alto)"
+GCL3C70,gabinete cacerolero 3 cajones,1918.64,70,70,60,0,NULL,NULL,0,NULL,NULL,1,69.8,17.3,2,69.8,26,"(1 cajón de 17.3 alto, 2 cajones de 26 alto)"
+GCL3C80,gabinete cacerolero 3 cajones,2126.64,80,70,60,0,NULL,NULL,0,NULL,NULL,1,79.8,17.3,2,79.8,26,"(1 cajón de 17.3 alto, 2 cajones de 26 alto)"
+GCL3C90,gabinete cacerolero 3 cajones,2287.94,90,70,60,0,NULL,NULL,0,NULL,NULL,1,89.8,17.3,2,89.8,26,"(1 cajón de 17.3 alto, 2 cajones de 26 alto)"
+GCL2C80,gabinete cacerolero 2 cajones,1673.86,80,70,60,0,NULL,NULL,0,NULL,NULL,2,79.8,34.8,0,NULL,NULL,
+GCL2C100,gabinete cacerolero 2 cajones,1891.76,100,70,60,0,NULL,NULL,0,NULL,NULL,2,99.8,34.8,0,NULL,NULL,
+GCM3C50,gabinete mantelero 3 cajones,1526.71,50,70,60,0,NULL,NULL,0,NULL,NULL,2,49.8,17.3,1,49.8,34.8,"(2 cajones de 17.3 alto, 1 cajón de 34.8 alto)"
+GCM3C80,gabinete mantelero 3 cajones,2030.42,80,70,60,0,NULL,NULL,0,NULL,NULL,2,79.8,17.3,1,79.8,34.8,"(2 cajones de 17.3 alto, 1 cajón de 34.8 alto)"
+GCM3C90,gabinete mantelero 3 cajones,2181.82,90,70,60,0,NULL,NULL,0,NULL,NULL,2,89.8,17.3,1,89.8,34.8,"(2 cajones de 17.3 alto, 1 cajón de 34.8 alto)"
+GF60SC,gabinete fregadero sin cajon,573.05,60,70,60,2,29.8,52.3,0,NULL,NULL,1,59.8,17.3,0,NULL,NULL,
+GF70SC,gabinete fregadero sin cajon,607,70,70,60,2,34.8,52.3,0,NULL,NULL,1,69.8,17.3,0,NULL,NULL,
+GF80SC,gabinete fregadero sin cajon,656.53,80,70,60,2,39.8,52.3,0,NULL,NULL,1,79.8,17.3,0,NULL,NULL,
+GF90SC,gabinete fregadero sin cajon,690.48,90,70,60,2,44.8,52.3,0,NULL,NULL,1,89.8,17.3,0,NULL,NULL,
+GF100SC,gabinete fregadero sin cajon,724.44,100,70,60,2,49.8,52.3,0,NULL,NULL,1,99.8,17.3,0,NULL,NULL,(Modelo GF100 en catálogo)
+GF110SC,gabinete fregadero sin cajon,758.4,110,70,60,2,54.8,52.3,0,NULL,NULL,1,109.8,17.3,0,NULL,NULL,
+GF120SC,gabinete fregadero sin cajon,792.36,120,70,60,3,39.8,52.3,0,NULL,NULL,1,119.8,17.3,0,NULL,NULL,Sobre pedido puede llevar 1 cajon y 2 frentes.
+GF601C,gabinete fregadero con cajón,887.16,60,70,60,2,29.8,52.3,0,NULL,NULL,2,29.8,17.3,0,NULL,NULL,(Modelo GF6010 en cat.) El cajón se puede colocar izq/der.
+GF701C,gabinete fregadero con cajón,935.27,70,70,60,2,34.8,52.3,0,NULL,NULL,2,34.8,17.3,0,NULL,NULL,(Modelo GF7010 en cat.) El cajón se puede colocar izq/der.
+GF801C,gabinete fregadero con cajón,984.79,80,70,60,2,39.8,52.3,0,NULL,NULL,2,39.8,17.3,0,NULL,NULL,El cajón se puede colocar izq/der.
+GF901C,gabinete fregadero con cajón,1041.39,90,70,60,2,44.8,52.3,0,NULL,NULL,2,44.8,17.3,0,NULL,NULL,(Modelo GF9010 en cat.) El cajón se puede colocar izq/der.
+GF1001C,gabinete fregadero con cajón,1082.42,100,70,60,2,49.8,52.3,0,NULL,NULL,2,49.8,17.3,0,NULL,NULL,(Modelo GF10010 en cat.) El cajón se puede colocar izq/der.
+GF1101C,gabinete fregadero con cajón,1130.53,110,70,60,2,54.8,52.3,0,NULL,NULL,2,54.8,17.3,0,NULL,NULL,(Modelo GF11010 en cat.) El cajón se puede colocar izq/der.
+GF1201C,gabinete fregadero con cajón,1178.63,120,70,60,3,39.8,52.3,0,NULL,NULL,3,39.8,17.3,0,NULL,NULL,(Modelo GF12010 en cat.) El cajón se puede colocar izq/der.
+GR90,gabinete rinconero pay,,87,70,55,2,29.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Bisagras especiales. Ver notas instalación.
+GRP97,gabinete rinconero pay,1688.01,97,70,55,2,39.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Bisagras especiales. Ver notas instalación.
+GRP1P87,gabinete rinconero pay una puerta,1535.2,87,70,55,1,44.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Ver notas instalación y cubierta.
+GRC90DCO,gabinete rinconero ciego con cajón der,1504.07,90,70,60,1,39.8,52.3,0,NULL,NULL,1,39.8,17.3,0,NULL,NULL,Ver notas instalación.
+GR100DCO,gabinete rinconero ciego con cajón der,1639.9,100,70,60,1,49.8,52.3,0,NULL,NULL,1,49.8,17.3,0,NULL,NULL,(Modelo GR100D en cat.) Ver notas instalación.
+GRC90ICO,gabinete rinconero ciego con cajón izq,1504.07,90,70,60,1,39.8,52.3,0,NULL,NULL,1,39.8,17.3,0,NULL,NULL,(Modelo GRCO0ICC en cat.) Ver notas instalación.
+GR100ICO,gabinete rinconero ciego con cajón izq,1639.9,100,70,60,1,49.8,52.3,0,NULL,NULL,1,49.8,17.3,0,NULL,NULL,(Modelo GR1001 en cat.) Ver notas instalación.
+GRC90DSC,gabinete rinconero ciego sin cajón der,1272.02,90,70,60,1,39.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Ver notas instalación.
+GRC100DSC,gabinete rinconero ciego sin cajón der,1337.11,100,70,60,1,49.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Ver notas instalación.
+GRC90ISC,gabinete rinconero ciego sin cajón izq,1272.02,90,70,60,1,39.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Ver notas instalación.
+GRC100ISC,gabinete rinconero ciego sin cajón izq,1337.11,100,70,60,1,49.8,69.8,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Ver notas instalación.
+LD30,locker despensa,1748.85,30,192.5,60,2,29.8,69.8,1,29.8,52.3,0,NULL,NULL,0,NULL,NULL,(Puertas T1 y T2 interpretadas de partes)
+LD40,locker despensa,1908.74,40,192.5,60,2,39.8,69.8,1,39.8,52.3,0,NULL,NULL,0,NULL,NULL,(Puertas T1 y T2 interpretadas de partes)
+LD50,locker despensa,2062.96,50,192.5,60,2,49.8,69.8,1,49.8,52.3,0,NULL,NULL,0,NULL,NULL,(Puertas T1 y T2 interpretadas de partes)
+LD60,locker despensa,2229.92,60,192.5,60,4,29.8,69.8,2,29.8,52.3,0,NULL,NULL,0,NULL,NULL,(Puertas T1 y T2 interpretadas de partes)
+LD70,locker despensa,2396.89,70,192.5,60,4,34.8,69.8,2,34.8,52.3,0,NULL,NULL,0,NULL,NULL,(Puertas T1 y T2 interpretadas de partes)
+LD80,locker despensa,2549.7,80,192.5,60,4,39.8,69.8,2,39.8,52.3,0,NULL,NULL,0,NULL,NULL,(Puertas T1 y T2 interpretadas de partes)
+LD90,locker despensa,2675.63,90,192.5,60,4,44.8,69.8,2,44.8,52.3,0,NULL,NULL,0,NULL,NULL,(Puertas T1 y T2 interpretadas de partes)
+LDS25,locker despensero sin entrepaño,1280.51,25,192.5,60,1,24.8,192.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Medida de puerta no es de línea. Usar herraje especial.
+LDS30,locker despensero sin entrepaño,1334.28,30,192.5,60,1,29.8,192.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Medida de puerta no es de línea. Usar herraje especial.
+LDS35,locker despensero sin entrepaño,1388.04,35,192.5,60,1,34.8,192.3,0,NULL,NULL,0,NULL,NULL,0,NULL,NULL,Medida de puerta no es de línea. Usar herraje especial.
+LH70,locker para horno,2050.23,70,192.5,60,2,34.8,69.8,2,34.8,34.8,0,NULL,NULL,0,NULL,NULL,Entrepaños no fijos. (Puertas T1 y T2 de partes)
+LH80,locker para horno,2204.46,80,192.5,60,2,39.8,69.8,2,39.8,34.8,0,NULL,NULL,0,NULL,NULL,Entrepaños no fijos. (Puertas T1 y T2 de partes)
+LH2C70_Op1,locker para 2 hornos 2 cajones (Op.1),2943.05,70,192.5,60,2,34.8,34.8,0,NULL,NULL,2,69.8,34.8,0,NULL,NULL,Entrepaños no fijos. Sobre pedido cajones por puertas.
+LH2C70_Op2,locker para 2 hornos 2 cajones (Op.2),2943.05,70,192.5,60,2,34.8,34.8,0,NULL,NULL,2,69.8,17.3,0,NULL,NULL,Entrepaños no fijos. Sobre pedido cajones por puertas.
+LH2C80_Op1,locker para 2 hornos 2 cajones (Op.1),3186.42,80,192.5,60,2,39.8,34.8,0,NULL,NULL,2,79.8,34.8,0,NULL,NULL,Entrepaños no fijos. Sobre pedido cajones por puertas.
+LH2C80_Op2,locker para 2 hornos 2 cajones (Op.2),3186.42,80,192.5,60,2,39.8,34.8,0,NULL,NULL,2,79.8,17.3,0,NULL,NULL,Entrepaños no fijos. Sobre pedido cajones por puertas.
