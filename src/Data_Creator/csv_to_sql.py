@@ -295,12 +295,12 @@ def generate_sql_statements_from_csv(csv_file_path, table_name):
         import traceback
         traceback.print_exc()
 
-def sql_generator_main(csv_file):
+def sql_generator_main(csv_file, dbname):
     # Reemplaza con la ruta real a tu archivo CSV
     csv_file_path_actual = csv_file
     
     # Nombre para el archivo de base de datos SQLite (se creará si no existe)
-    db_file_name = "src/data/kitchen_main_db" 
+    db_file_name = dbname
     
     # Puedes derivarlo del nombre del CSV o elegir uno específico
     csv_base_name = os.path.splitext(os.path.basename(csv_file_path_actual))[0]
@@ -308,4 +308,4 @@ def sql_generator_main(csv_file):
     create_sqlite_db_from_csv(csv_file_path_actual, db_file_name, table_name_for_db)
 
 if __name__ == "__main__":
-    sql_generator_main("src/Data_Creator/dbKitchen.csv")
+    sql_generator_main("src/Data_Creator/dbdoor.csv", "src/data/dbdoor" )

@@ -27,7 +27,7 @@ class MenuBar(QMenuBar):
         file_menu.addAction(open_action)
         # Acción Save
         save_action = QAction(QIcon('exit.png'), '&Guardar', self)
-        save_action.setShortcut('Ctrl+G')
+        save_action.setShortcut('Ctrl+S')
         save_action.triggered.connect(self.exit_call)
         file_menu.addAction(save_action)       
         # Acción Exit

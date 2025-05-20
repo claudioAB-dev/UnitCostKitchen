@@ -4,14 +4,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="Cocinas_Software",
+    name="UnitCostKitchen",
     version="0.1.0",
     author="Claudio Ariza",
     author_email="clarba156@gmail.com",
-    description="Una breve descripción de mi paquete.",
+    description="UnitCostKitchen: Modular software for kitchen designers/sellers.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/tu_usuario/mi_paquete",
+    url="https://github.com/claudioAB-dev/UnitCostKitchen",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
