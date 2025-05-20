@@ -1,13 +1,6 @@
-
-
-
+from src.GUI.main_window import main_GUI_window
 
 def main():
-    None
+    main_GUI_window()
 
 
-
-
-
-if __name__ == "__main__":
-    main()

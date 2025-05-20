@@ -1,4 +1,8 @@
 from setuptools import setup, find_packages
+import pyqt6
+
+
+
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -11,7 +15,7 @@ setup(
     description="Una breve descripción de mi paquete.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/tu_usuario/mi_paquete",
+    #url="https://github.com/tu_usuario/mi_paquete",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
