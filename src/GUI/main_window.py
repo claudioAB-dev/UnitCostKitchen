@@ -9,7 +9,6 @@ from src.GUI.Widgets.seccion_2_function import IndividualConfigurationWidget
 from src.GUI.Widgets.welcome_page import WelcomePage
 
 
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -55,28 +54,54 @@ class MainWindow(QMainWindow):
         self.door_search_box.setPlaceholderText("Buscar puerta...")
         layout2.addWidget(self.door_search_box)
 
+
         self.door_tree = QTreeWidget()
         self.door_tree.setHeaderLabels(["Modelo Puerta", "Color", "Precio Marco", "Precio Frente", "Precio Mullion"])
+        self.door_tree.setSelectionMode(QTreeWidget.SelectionMode.SingleSelection)  # Solo una puerta a la vez
         layout2.addWidget(self.door_tree)
 
         self.door_search_box.textChanged.connect(self.populate_door_tree)
+
         self.selected_door1_label = QLabel("Puerta seleccionada T1: Ninguna")
         layout2.addWidget(self.selected_door1_label)
+        self.add_t1_button = QPushButton("Agregar T1")
+        layout2.addWidget(self.add_t1_button)
+        self.delete_t1_button = QPushButton("Eliminar T1")
+        layout2.addWidget(self.delete_t1_button)
 
         self.selected_door2_label = QLabel("Puerta seleccionada T2: Ninguna")
         layout2.addWidget(self.selected_door2_label)
-        self.selected_door2_label.hide()  # Oculta por defecto
-        self.door_tree.itemSelectionChanged.connect(self.update_selected_doors)
-        self.add_button = QPushButton("Agregar")
-        layout2.addWidget(self.add_button)
+        self.selected_door2_label.hide()
+        self.add_t2_button = QPushButton("Agregar T2")
+        layout2.addWidget(self.add_t2_button)
+        self.add_t2_button.hide()
+        self.delete_t2_button = QPushButton("Eliminar T2")
+        layout2.addWidget(self.delete_t2_button)
+        self.delete_t2_button.hide()
 
-
+        self.add_t1_button.clicked.connect(self.assign_t1_door)
+        self.delete_t1_button.clicked.connect(self.delete_t1_door)
+        self.add_t2_button.clicked.connect(self.assign_t2_door)
+        self.delete_t2_button.clicked.connect(self.delete_t2_door)
+        self.select_furniture_button = QPushButton("Seleccionar mueble")
+        layout2.addWidget(self.select_furniture_button)
+        self.select_furniture_button.clicked.connect(self.add_selected_furniture_to_list)
         layout2.addStretch() 
         # Sección 3
+
         used_furniture = QFrame()
         used_furniture.setFrameShape(QFrame.Shape.StyledPanel)
-        layout3 = QHBoxLayout(used_furniture)
+        layout3 = QVBoxLayout(used_furniture)
         layout3.addWidget(QLabel("Sección 3 (Redimensionable)"))
+        self.selected_furniture = []  
+
+        self.selected_furniture_list = QTreeWidget()
+        self.selected_furniture_list.setHeaderLabels(["Modelo", "Puerta T1", "Puerta T2", "Precio Total"])
+        layout3.addWidget(self.selected_furniture_list)        
+        layout3.setStretch(1, 1)
+        self.delete_selected_furniture_button = QPushButton("Eliminar mueble seleccionado")
+        layout3.addWidget(self.delete_selected_furniture_button)
+        self.delete_selected_furniture_button.clicked.connect(self.delete_selected_furniture)
 
         # Añadir las secciones al splitter
         main_splitter.addWidget(furniture_available)
@@ -112,7 +137,6 @@ class MainWindow(QMainWindow):
             if conexion:
                 conexion.close()
 
-
     def filter_tree_by_model(self, text):
         text = text.lower()
         root = self.tree.invisibleRootItem()
@@ -128,7 +152,6 @@ class MainWindow(QMainWindow):
                     visible = True
             tipo_item.setHidden(not visible)
 
-
     def update_section2_info(self):
         selected = self.tree.selectedItems()
         if selected and selected[0].parent():
@@ -136,6 +159,11 @@ class MainWindow(QMainWindow):
             descripcion = selected[0].text(1)
             precio = selected[0].text(2)
             db_path = 'src/data/kitchen_main_db'
+            self.selected_t1_door = None
+            self.selected_t2_door = None
+            self.selected_door1_label.setText("Puerta seleccionada T1: Ninguna")
+            self.selected_door2_label.setText("Puerta seleccionada T2: Ninguna")
+            self.populate_door_tree()
             try:
                 conexion = sqlite3.connect(db_path)
                 cursor = conexion.cursor()
@@ -174,8 +202,17 @@ class MainWindow(QMainWindow):
             finally:
                 if 'conexion' in locals():
                     conexion.close()
-            puertas_info = ""
             self.num_puertas_t2 = num_puertas_t2
+            # Mostrar u ocultar controles de T2 según corresponda
+            if num_puertas_t2 and str(num_puertas_t2).isdigit() and int(num_puertas_t2) > 0:
+                self.selected_door2_label.setVisible(True)
+                self.add_t2_button.setVisible(True)
+                self.delete_t2_button.setVisible(True)
+            else:
+                self.selected_door2_label.setVisible(False)
+                self.add_t2_button.setVisible(False)
+                self.delete_t2_button.setVisible(False)
+            puertas_info = ""
             if num_puertas_t1 and str(num_puertas_t1).isdigit() and int(num_puertas_t1) > 0:
                 puertas_info += f"<b>Puertas T1:</b> {num_puertas_t1} ({ancho_puerta_t1}x{alto_puerta_t1} cm)<br>"
             if num_puertas_t2 and str(num_puertas_t2).isdigit() and int(num_puertas_t2) > 0:
@@ -203,7 +240,32 @@ class MainWindow(QMainWindow):
             self.selected_door1_label.setText("Puerta seleccionada T1: Ninguna")
             self.selected_door2_label.setText("Puerta seleccionada T2: Ninguna")
             self.selected_door2_label.hide()
+            self.selected_t1_door = None
+            self.selected_t2_door = None
+            self.add_t2_button.hide()
+            self.delete_t2_button.hide()
 
+    def delete_t1_door(self):
+        self.selected_t1_door = None
+        self.selected_door1_label.setText("Puerta seleccionada T1: Ninguna")
+
+    def assign_t2_door(self):
+        selected_items = self.door_tree.selectedItems()
+        if selected_items:
+            door = selected_items[0]
+            self.selected_t2_door = door
+            self.selected_door2_label.setText(f"Puerta seleccionada T2: {door.text(0)} | Precio Marco: {door.text(2)}")
+
+    def delete_t2_door(self):
+        self.selected_t2_door = None
+        self.selected_door2_label.setText("Puerta seleccionada T2: Ninguna")
+
+    def assign_t1_door(self):
+        selected_items = self.door_tree.selectedItems()
+        if selected_items:
+            door = selected_items[0]
+            self.selected_t1_door = door
+            self.selected_door1_label.setText(f"Puerta seleccionada T1: {door.text(0)} | Precio Marco: {door.text(2)}")
 
     def populate_door_tree(self, search_text=""):
         self.door_tree.clear()
@@ -244,42 +306,80 @@ class MainWindow(QMainWindow):
             if 'conexion' in locals():
                 conexion.close()
 
-
-    def update_selected_doors(self):
-        selected_items = self.door_tree.selectedItems()
-        num_puertas_t2 = 0
-        if not selected_items:
-            self.selected_door1_label.setText("Puerta seleccionada T1: Ninguna")
-            self.selected_door2_label.setText("Puerta seleccionada T2: Ninguna")
-            self.selected_door2_label.hide()
+    def add_selected_furniture_to_list(self):
+        selected = self.tree.selectedItems()
+        if not selected or not selected[0].parent():
             return
 
-        # Si hay dos tipos de puerta, permite seleccionar dos
-        if hasattr(self, 'num_puertas_t2') and self.num_puertas_t2 and str(self.num_puertas_t2).isdigit() and int(self.num_puertas_t2) > 0:
-            self.selected_door2_label.show()
-            if len(selected_items) >= 2:
-                door1 = selected_items[0]
-                door2 = selected_items[1]
-                self.selected_door1_label.setText(f"Puerta seleccionada T1: {door1.text(0)} | Precio Marco: {door1.text(2)}")
-                self.selected_door2_label.setText(f"Puerta seleccionada T2: {door2.text(0)} | Precio Marco: {door2.text(2)}")
-            elif len(selected_items) == 1:
-                door1 = selected_items[0]
-                self.selected_door1_label.setText(f"Puerta seleccionada T1: {door1.text(0)} | Precio Marco: {door1.text(2)}")
-                self.selected_door2_label.setText("Puerta seleccionada T2: Ninguna")
-            else:
-                self.selected_door1_label.setText("Puerta seleccionada T1: Ninguna")
-                self.selected_door2_label.setText("Puerta seleccionada T2: Ninguna")
+        modelo = selected[0].text(0)
+        precio_mueble = selected[0].text(2)
+
+        # T1
+        if isinstance(self.selected_t1_door, QTreeWidgetItem):
+            puerta_t1 = self.selected_t1_door.text(0)
+            try:
+                precio_t1 = float(self.selected_t1_door.text(2))
+            except ValueError:
+                precio_t1 = 0
         else:
-            self.selected_door2_label.hide()
-            door = selected_items[0]
-            self.selected_door1_label.setText(f"Puerta seleccionada: {door.text(0)} | Precio Marco: {door.text(2)}")
+            puerta_t1 = "Ninguna"
+            precio_t1 = 0
 
+        # T2
+        if self.selected_door2_label.isVisible() and isinstance(self.selected_t2_door, QTreeWidgetItem):
+            puerta_t2 = self.selected_t2_door.text(0)
+            try:
+                precio_t2 = float(self.selected_t2_door.text(2))
+            except ValueError:
+                precio_t2 = 0
+        else:
+            puerta_t2 = "Ninguna"
+            precio_t2 = 0
 
+        try:
+            precio_mueble = float(precio_mueble)
+        except ValueError:
+            precio_mueble = 0
+
+        precio_total = precio_mueble + precio_t1 + precio_t2
+
+        self.selected_furniture.append({
+            "modelo": modelo,
+            "puerta_t1": puerta_t1,
+            "puerta_t2": puerta_t2,
+            "precio_total": precio_total
+        })
+
+        item = QTreeWidgetItem([
+            modelo,
+            puerta_t1,
+            puerta_t2,
+            f"{precio_total:.2f}"
+        ])
+        self.selected_furniture_list.addTopLevelItem(item)
+
+    def delete_selected_furniture(self):
+        selected_items = self.selected_furniture_list.selectedItems()
+        if selected_items:
+            for item in selected_items:
+                index = self.selected_furniture_list.indexOfTopLevelItem(item)
+                if index != -1:
+                    self.selected_furniture_list.takeTopLevelItem(index)
+                    if index < len(self.selected_furniture):
+                        del self.selected_furniture[index]
+        else:
+            # Si no hay selección, elimina el último
+            count = self.selected_furniture_list.topLevelItemCount()
+            if count > 0:
+                self.selected_furniture_list.takeTopLevelItem(count - 1)
+                if len(self.selected_furniture) > 0:
+                    self.selected_furniture.pop()
+                    
 def main_GUI_window():
     app = QApplication(sys.argv)
     welcome = WelcomePage()
     mainWin = None
-
+    
     def open_main_window():
         nonlocal mainWin
         mainWin = MainWindow()
@@ -290,5 +390,5 @@ def main_GUI_window():
     welcome.open_btn.clicked.connect(open_main_window)  # Aquí puedes poner lógica para abrir archivo
 
     welcome.show()
-    sys.exit(app.exec())
 
+    sys.exit(app.exec())
