@@ -308,4 +308,4 @@ def sql_generator_main(csv_file, dbname):
     create_sqlite_db_from_csv(csv_file_path_actual, db_file_name, table_name_for_db)
 
 if __name__ == "__main__":
-    sql_generator_main("src/Data_Creator/dbdoor.csv", "src/data/dbdoor" )
+    sql_generator_main("src/Data_Creator/db_doors.csv", "src/data/dbdoor" )
