@@ -1,16 +1,26 @@
-import sys
-import os # Necesario para trabajar con nombres de archivo
+import sys, os
+
 import json # Necesario para guardar y cargar datos del proyecto
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
                              QLabel, QFrame, QSplitter, QLineEdit, QPushButton, 
-                             QTreeWidget, QTreeWidgetItem, QMessageBox, QFileDialog) # Agregados QMessageBox y QFileDialog
+                             QTreeWidget, QTreeWidgetItem, QMessageBox, QFileDialog, QSpinBox) # Agregados QMessageBox y QFileDialog
 from PyQt6.QtGui import QPalette, QColor, QIcon, QCloseEvent # Agregado QCloseEvent
 from PyQt6.QtCore import Qt, pyqtSignal # Agregado pyqtSignal si fuera necesario para comunicación más compleja
 import sqlite3
 
+
 from src.GUI.Widgets.MenuBar import MenuBar
 # from src.GUI.Widgets.seccion_2_function import IndividualConfigurationWidget # No se usa directamente en este ejemplo
 from src.GUI.Widgets.welcome_page import WelcomePage
+
+
+def resource_path(relative_path):
+    """Obtiene la ruta absoluta al recurso, compatible con PyInstaller."""
+    if hasattr(sys, '_MEIPASS'):
+        # PyInstaller lo extrae a una carpeta temporal y guarda la ruta en _MEIPASS
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath(os.path.dirname(__file__)), relative_path)
+
 
 
 class MainWindow(QMainWindow):
@@ -117,6 +127,13 @@ class MainWindow(QMainWindow):
         main_splitter.addWidget(furniture_available)
         main_splitter.addWidget(individual_configuration)
         main_splitter.addWidget(used_furniture)
+        self.product_quantity_label = QLabel("Cantidad:")
+        self.product_quantity_spin = QSpinBox()
+        self.product_quantity_spin.setMinimum(1)
+        self.product_quantity_label.hide()
+        self.product_quantity_spin.hide()
+        layout2.addWidget(self.product_quantity_label)
+        layout2.addWidget(self.product_quantity_spin)
         main_splitter.setSizes([250, 350, 400]) # Tamaños iniciales de las secciones
         main_splitter.setCollapsible(0, False)
         main_splitter.setCollapsible(1, False)
@@ -296,22 +313,22 @@ class MainWindow(QMainWindow):
             event.ignore() # Cancelar cierre
 
     def populate_tree_from_db(self):
-        # Ruta corregida asumiendo que 'data' está en 'src'
-        db_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'kitchen_main_db') #
+        # Ruta de la base de datos principal de muebles
+        db_path = resource_path(os.path.join('src', 'data', 'kitchen_main_db'))        
+        self.tree.clear()
+        # --- MUEBLES ---
         if not os.path.exists(db_path):
             QMessageBox.critical(self, "Error de Base de Datos", f"La base de datos principal no se encontró en: {db_path}")
             return
         try:
             conexion = sqlite3.connect(db_path)
             cursor = conexion.cursor()
-            # ... (resto del código sin cambios)
-            cursor.execute("SELECT DISTINCT Tipo FROM dbKitchen") #
+            cursor.execute("SELECT DISTINCT Tipo FROM dbKitchen")
             tipos = [row[0] for row in cursor.fetchall()]
-            self.tree.clear()
             for tipo in tipos:
                 tipo_item = QTreeWidgetItem(self.tree)
                 tipo_item.setText(0, tipo)
-                cursor.execute("SELECT Modelo, Descripcion_Catalogo, Precio FROM dbKitchen WHERE Tipo = ?", (tipo,)) #
+                cursor.execute("SELECT Modelo, Descripcion_Catalogo, Precio FROM dbKitchen WHERE Tipo = ?", (tipo,))
                 modelos = cursor.fetchall()
                 for modelo, descripcion, precio in modelos:
                     modelo_item = QTreeWidgetItem(tipo_item)
@@ -324,6 +341,36 @@ class MainWindow(QMainWindow):
         finally:
             if 'conexion' in locals() and conexion:
                 conexion.close()
+
+        # --- PRODUCTOS AGREGADOS ---
+        db_path_products = resource_path(os.path.join('src', 'data', 'added_products'))
+        
+        
+        categoria_item = QTreeWidgetItem(self.tree)
+        categoria_item.setText(0, "Productos Agregados")
+        if os.path.exists(db_path_products):
+            try:
+                conexion_prod = sqlite3.connect(db_path_products)
+                cursor_prod = conexion_prod.cursor()
+                cursor_prod.execute("SELECT id, name, price, descripcion FROM added_products")
+                productos = cursor_prod.fetchall()
+                for prod_id, name, price, descripcion in productos:
+                    prod_item = QTreeWidgetItem(categoria_item)
+                    prod_item.setText(0, str(name))
+                    prod_item.setText(1, str(descripcion))
+                    prod_item.setText(2, str(price))
+                    prod_item.setData(0, Qt.ItemDataRole.UserRole, prod_id)
+            except sqlite3.Error as error:
+                print(f"Error con la base de datos de productos: {error}")
+                QMessageBox.warning(self, "Error de Productos", f"No se pudo leer la base de datos de productos: {error}")
+            finally:
+                if 'conexion_prod' in locals() and conexion_prod:
+                    conexion_prod.close()
+        # Nodo especial para agregar elemento personalizado (siempre presente)
+        agregar_item = QTreeWidgetItem(categoria_item)
+        agregar_item.setText(0, "Agregar elemento")
+        agregar_item.setText(1, "")
+        agregar_item.setText(2, "")  
 
     def filter_tree_by_model(self, text): #
         text = text.lower()
@@ -340,26 +387,126 @@ class MainWindow(QMainWindow):
                     visible = True
             tipo_item.setHidden(not visible)
 
-    def update_section2_info(self): #
+
+        else: # Nada seleccionado o un item de tipo
+            self._clear_project_state() # Reutilizar para limpiar sección 2
+            # self.section2_label.setText("Configuración de muebles") #
+            # self.section2_doors_label.setText("") #
+            # self.door_tree.clear() #
+            # self.selected_door1_label.setText("Puerta seleccionada T1: Ninguna") #
+            # self.selected_door2_label.setText("Puerta seleccionada T2: Ninguna") #
+            # self.selected_door2_label.hide() #
+            # self.selected_t1_door = None #
+            # self.selected_t2_door = None #
+            # self.add_t2_button.hide() #
+            # self.delete_t2_button.hide() #
+   
+    def update_section2_info(self):
         selected = self.tree.selectedItems()
-        if selected and selected[0].parent(): # Asegura que es un item de mueble, no de tipo
+        if not selected or not selected[0].parent():
+            self._clear_project_state()
+            return
+        parent = selected[0].parent()
+        # Detectar si es producto agregado
+        if parent.text(0) == "Productos Agregados":
+            nombre = selected[0].text(0)
+            if nombre == "Agregar elemento":
+                # Ocultar controles de puertas y mostrar controles de cantidad
+                self.selected_door1_label.hide()
+                self.add_t1_button.hide()
+                self.delete_t1_button.hide()
+                self.selected_door2_label.hide()
+                self.add_t2_button.hide()
+                self.delete_t2_button.hide()
+                self.door_tree.hide()
+                self.door_search_box.hide()
+                self.product_quantity_label.show()
+                self.product_quantity_spin.show()
+
+                # Mostrar campos de entrada para nombre y precio
+                if not hasattr(self, 'custom_name_edit'):
+                    from PyQt6.QtWidgets import QLineEdit, QDoubleSpinBox, QPushButton, QHBoxLayout
+                    self.custom_name_edit = QLineEdit()
+                    self.custom_name_edit.setPlaceholderText("Nombre del producto")
+                    self.custom_price_spin = QDoubleSpinBox()
+                    self.custom_price_spin.setPrefix("$")
+                    self.custom_price_spin.setMaximum(9999999)
+                    self.custom_price_spin.setDecimals(2)
+                    self.custom_price_spin.setValue(0.0)
+                    self.add_custom_product_btn = QPushButton("Agregar al proyecto")
+                    # Layout para los campos
+                    self.custom_input_layout = QHBoxLayout()
+                    self.custom_input_layout.addWidget(self.custom_name_edit)
+                    self.custom_input_layout.addWidget(self.custom_price_spin)
+                    self.custom_input_layout.addWidget(self.add_custom_product_btn)
+                    # Widget contenedor
+                    from PyQt6.QtWidgets import QWidget
+                    self.custom_input_widget = QWidget()
+                    self.custom_input_widget.setLayout(self.custom_input_layout)
+                    # Agrega el widget al layout2 (de la sección 2)
+                    layout2 = self.section2_label.parentWidget().layout()
+                    layout2.addWidget(self.custom_input_widget)
+                    self.add_custom_product_btn.clicked.connect(self.add_custom_product_to_project)
+                else:
+                    self.custom_input_widget.show()
+                self.section2_label.setText("<b>Agregar producto personalizado</b>")
+                self.section2_doors_label.setText("")
+                return
+            else:
+                if hasattr(self, 'custom_input_widget'):
+                    self.custom_input_widget.hide()
+
+
+
+            # Ocultar controles de puertas
+            self.selected_door1_label.hide()
+            self.add_t1_button.hide()
+            self.delete_t1_button.hide()
+            self.selected_door2_label.hide()
+            self.add_t2_button.hide()
+            self.delete_t2_button.hide()
+            self.door_tree.hide()
+            self.door_search_box.hide()
+
+            # Mostrar controles de cantidad
+            self.product_quantity_label.show()
+            self.product_quantity_spin.show()
+
+            # Mostrar info del producto
+            nombre = selected[0].text(0)
+            descripcion = selected[0].text(1)
+            precio = selected[0].text(2)
+            self.section2_label.setText(
+                f"<b>Producto:</b> {nombre}<br>"
+                f"<b>Descripción:</b> {descripcion}<br>"
+                f"<b>Precio unitario:</b> {precio}"
+            )
+            self.section2_doors_label.setText("")
+        else:
+            # Mostrar controles de puertas
+            self.selected_door1_label.show()
+            self.add_t1_button.show()
+            self.delete_t1_button.show()
+            self.door_tree.show()
+            self.door_search_box.show()
+            # Mostrar T2 solo si corresponde (lo manejas más abajo)
+            # Ocultar controles de cantidad
+            self.product_quantity_label.hide()
+            self.product_quantity_spin.hide()
+
             modelo = selected[0].text(0)
             descripcion = selected[0].text(1)
             precio = selected[0].text(2)
-            db_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'kitchen_main_db') #
-            
-            # Resetear selección de puertas al cambiar de mueble
+            db_path = resource_path(os.path.join('src', 'data', 'kitchen_main_db'))
             self.selected_t1_door = None
             self.selected_t2_door = None
             self.selected_door1_label.setText("Puerta seleccionada T1: Ninguna")
             self.selected_door2_label.setText("Puerta seleccionada T2: Ninguna")
-            self.door_tree.clearSelection() # Deseleccionar en el árbol de puertas
-            self.populate_door_tree() # Repoblar (y filtrar si hay texto en door_search_box)
-
+            self.door_tree.clearSelection()
+            self.populate_door_tree()
             try:
                 conexion = sqlite3.connect(db_path)
                 cursor = conexion.cursor()
-                # ... (query y obtención de datos sin cambios)
                 cursor.execute(
                     """SELECT Ancho_Mueble_LadoA_cm, Altura_Mueble_cm, Fondo_Mueble_cm,
                             Num_Puertas_T1, Ancho_Puerta_T1_cm, Alto_Puerta_T1_cm,
@@ -367,9 +514,8 @@ class MainWindow(QMainWindow):
                             Num_Cajones_T1, Ancho_Frente_Cajon_T1_cm, Alto_Frente_Cajon_T1_cm,
                             Num_Cajones_T2, Ancho_Frente_Cajon_T2_cm, Alto_Frente_Cajon_T2_cm,
                             Observaciones_Mueble
-                    FROM dbKitchen WHERE Modelo = ? LIMIT 1""", (modelo,) #
+                    FROM dbKitchen WHERE Modelo = ? LIMIT 1""", (modelo,)
                 )
-
                 result = cursor.fetchone()
                 if result:
                     (ancho, alto, fondo,
@@ -384,7 +530,7 @@ class MainWindow(QMainWindow):
                     num_puertas_t2, ancho_puerta_t2, alto_puerta_t2,
                     num_cajones_t1, ancho_cajon_t1, alto_cajon_t1,
                     num_cajones_t2, ancho_cajon_t2, alto_cajon_t2,
-                    observaciones) = ("N/A",)*16 #
+                    observaciones) = ("N/A",)*16
                 self.section2_label.setText(
                     f"<b>Modelo:</b> {modelo}<br>"
                     f"<b>Descripción:</b> {descripcion}<br>"
@@ -392,54 +538,29 @@ class MainWindow(QMainWindow):
                     f"<b>Medidas:</b> {ancho} x {alto} x {fondo} cm"
                 )
             except sqlite3.Error as error:
-                (ancho, alto, fondo,
-                num_puertas_t1, ancho_puerta_t1, alto_puerta_t1,
-                num_puertas_t2, ancho_puerta_t2, alto_puerta_t2,
-                num_cajones_t1, ancho_cajon_t1, alto_cajon_t1,
-                num_cajones_t2, ancho_cajon_t2, alto_cajon_t2,
-                observaciones) = ("Error",)*16 #
                 print(f"Error con la base de datos: {error}")
             finally:
                 if 'conexion' in locals() and conexion:
                     conexion.close()
-            
-            self.num_puertas_t2_actual = num_puertas_t2 # Guardar para referencia
-            if num_puertas_t2 and str(num_puertas_t2).isdigit() and int(num_puertas_t2) > 0: #
-                self.selected_door2_label.setVisible(True)
-                self.add_t2_button.setVisible(True)
-                self.delete_t2_button.setVisible(True)
+            self.num_puertas_t2_actual = num_puertas_t2
+            if num_puertas_t2 and str(num_puertas_t2).isdigit() and int(num_puertas_t2) > 0:
+                self.selected_door2_label.show()
+                self.add_t2_button.show()
+                self.delete_t2_button.show()
             else:
-                self.selected_door2_label.setVisible(False)
-                self.add_t2_button.setVisible(False)
-                self.delete_t2_button.setVisible(False)
-            
-            # ... (resto de la construcción de puertas_info y section2_label.setText sin cambios)
+                self.selected_door2_label.hide()
+                self.add_t2_button.hide()
+                self.delete_t2_button.hide()
             puertas_info = ""
-            if num_puertas_t1 and str(num_puertas_t1).isdigit() and int(num_puertas_t1) > 0: #
+            if num_puertas_t1 and str(num_puertas_t1).isdigit() and int(num_puertas_t1) > 0:
                 puertas_info += f"<b>Puertas T1:</b> {num_puertas_t1} ({ancho_puerta_t1}x{alto_puerta_t1} cm)<br>"
-            if num_puertas_t2 and str(num_puertas_t2).isdigit() and int(num_puertas_t2) > 0: #
+            if num_puertas_t2 and str(num_puertas_t2).isdigit() and int(num_puertas_t2) > 0:
                 puertas_info += f"<b>Puertas T2:</b> {num_puertas_t2} ({ancho_puerta_t2}x{alto_puerta_t2} cm)<br>"
-            # ... (cajones)
-
-            self.section2_doors_label.setText(puertas_info) #
-
-
-        else: # Nada seleccionado o un item de tipo
-            self._clear_project_state() # Reutilizar para limpiar sección 2
-            # self.section2_label.setText("Configuración de muebles") #
-            # self.section2_doors_label.setText("") #
-            # self.door_tree.clear() #
-            # self.selected_door1_label.setText("Puerta seleccionada T1: Ninguna") #
-            # self.selected_door2_label.setText("Puerta seleccionada T2: Ninguna") #
-            # self.selected_door2_label.hide() #
-            # self.selected_t1_door = None #
-            # self.selected_t2_door = None #
-            # self.add_t2_button.hide() #
-            # self.delete_t2_button.hide() #
+            self.section2_doors_label.setText(puertas_info)
 
     def populate_door_tree(self, search_text=""): #
         self.door_tree.clear()
-        db_path_doors = os.path.join(os.path.dirname(__file__), '..', 'data', 'dbdoor') #
+        db_path_doors = resource_path(os.path.join('src', 'data', 'dbdoor'))        
         if not os.path.exists(db_path_doors):
             QMessageBox.warning(self, "Advertencia", f"La base de datos de puertas no se encontró en: {db_path_doors}")
             return
@@ -513,6 +634,42 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, "Selección Requerida", "Por favor, seleccione un modelo de mueble de la lista.")
             return
 
+        parent = selected_furniture_items[0].parent()
+        # Si es producto agregado
+        if parent.text(0) == "Productos Agregados":
+            nombre = selected_furniture_items[0].text(0)
+            descripcion = selected_furniture_items[0].text(1)
+            precio_unitario_str = selected_furniture_items[0].text(2)
+            try:
+                precio_unitario = float(str(precio_unitario_str).replace(",", ""))
+            except ValueError:
+                precio_unitario = 0.0
+            cantidad = self.product_quantity_spin.value()
+            precio_total = precio_unitario * cantidad
+
+            producto_data = {
+                "modelo": nombre,
+                "descripcion_mueble": descripcion,
+                "precio_base_mueble": precio_unitario,
+                "puerta_t1": "N/A",
+                "precio_puerta_t1": 0.0,
+                "puerta_t2": "N/A",
+                "precio_puerta_t2": 0.0,
+                "cantidad": cantidad,
+                "precio_total": precio_total
+            }
+            self.selected_furniture.append(producto_data)
+            item_widget = QTreeWidgetItem([
+                f"{nombre} (x{cantidad})",
+                "N/A",
+                "N/A",
+                f"{precio_total:.2f}"
+            ])
+            self.selected_furniture_list.addTopLevelItem(item_widget)
+            self.set_project_modified(True)
+            return
+
+        # --- Resto del código para muebles normales ---
         modelo = selected_furniture_items[0].text(0)
         precio_mueble_str = selected_furniture_items[0].text(2)
 
@@ -522,18 +679,13 @@ class MainWindow(QMainWindow):
         if self.selected_t1_door:
             puerta_t1_modelo = f"{self.selected_t1_door.text(0)} ({self.selected_t1_door.text(1)})"
             try:
-                # Asumir que el precio del marco es el relevante aquí o ajustar lógica
-                precio_str = str(self.selected_t1_door.text(2)).replace(",", "") # Limpiar comas
+                precio_str = str(self.selected_t1_door.text(2)).replace(",", "")
                 puerta_t1_precio_marco = float(precio_str if precio_str and precio_str != "ND" else 0.0)
             except ValueError:
                 puerta_t1_precio_marco = 0.0
-                print(f"Advertencia: Precio de marco T1 no válido: {self.selected_t1_door.text(2)}")
-
 
         puerta_t2_modelo = "Ninguna"
         puerta_t2_precio_marco = 0.0
-        # Verificar si el mueble usa puertas T2 (basado en num_puertas_t2_actual obtenido en update_section2_info)
-        # y si se ha seleccionado una puerta T2
         if (hasattr(self, 'num_puertas_t2_actual') and self.num_puertas_t2_actual and 
             str(self.num_puertas_t2_actual).isdigit() and int(self.num_puertas_t2_actual) > 0 and 
             self.selected_t2_door):
@@ -543,8 +695,6 @@ class MainWindow(QMainWindow):
                 puerta_t2_precio_marco = float(precio_str if precio_str and precio_str != "ND" else 0.0)
             except ValueError:
                 puerta_t2_precio_marco = 0.0
-                print(f"Advertencia: Precio de marco T2 no válido: {self.selected_t2_door.text(2)}")
-
 
         try:
             precio_mueble = float(str(precio_mueble_str).replace(",", ""))
@@ -552,21 +702,17 @@ class MainWindow(QMainWindow):
             precio_mueble = 0.0
             QMessageBox.critical(self, "Error de Precio", f"El precio base del mueble '{modelo}' no es válido: {precio_mueble_str}")
             return
-        
-        # Aquí necesitarás una lógica más compleja para calcular el precio total
-        # basado en las dimensiones de las puertas del mueble y el Precio_M2 de las puertas seleccionadas.
-        # Por ahora, sumamos el precio base del mueble y el precio de marco (si aplica).
-        # Este cálculo es una SIMPLIFICACIÓN y debe ser revisado.
-        precio_total = precio_mueble + puerta_t1_precio_marco + puerta_t2_precio_marco # Simplificación
+
+        precio_total = precio_mueble + puerta_t1_precio_marco + puerta_t2_precio_marco
 
         furniture_data = {
             "modelo": modelo,
-            "descripcion_mueble": selected_furniture_items[0].text(1), # Guardar descripción
+            "descripcion_mueble": selected_furniture_items[0].text(1),
             "precio_base_mueble": precio_mueble,
             "puerta_t1": puerta_t1_modelo,
-            "precio_puerta_t1": puerta_t1_precio_marco, # O el precio calculado real
+            "precio_puerta_t1": puerta_t1_precio_marco,
             "puerta_t2": puerta_t2_modelo,
-            "precio_puerta_t2": puerta_t2_precio_marco, # O el precio calculado real
+            "precio_puerta_t2": puerta_t2_precio_marco,
             "precio_total": precio_total 
         }
         self.selected_furniture.append(furniture_data)
@@ -606,6 +752,38 @@ class MainWindow(QMainWindow):
                 if index < len(self.selected_furniture):
                     del self.selected_furniture[index]
                     self.set_project_modified(True)
+
+    def add_custom_product_to_project(self):
+        nombre = self.custom_name_edit.text().strip()
+        precio_unitario = self.custom_price_spin.value()
+        cantidad = self.product_quantity_spin.value()
+        if not nombre or precio_unitario <= 0:
+            QMessageBox.warning(self, "Datos requeridos", "Debes ingresar un nombre y un precio mayor a cero.")
+            return
+        precio_total = precio_unitario * cantidad
+        producto_data = {
+            "modelo": nombre,
+            "descripcion_mueble": "",
+            "precio_base_mueble": precio_unitario,
+            "puerta_t1": "N/A",
+            "precio_puerta_t1": 0.0,
+            "puerta_t2": "N/A",
+            "precio_puerta_t2": 0.0,
+            "cantidad": cantidad,
+            "precio_total": precio_total
+        }
+        self.selected_furniture.append(producto_data)
+        item_widget = QTreeWidgetItem([
+            f"{nombre} (x{cantidad})",
+            "N/A",
+            "N/A",
+            f"{precio_total:.2f}"
+        ])
+        self.selected_furniture_list.addTopLevelItem(item_widget)
+        self.set_project_modified(True)
+        # Limpiar campos
+        self.custom_name_edit.clear()
+        self.custom_price_spin.setValue(0.0)
 
 
 def main_GUI_window(): #

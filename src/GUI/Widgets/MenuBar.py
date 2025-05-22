@@ -1,7 +1,8 @@
-from PyQt6.QtWidgets import QMenuBar
+from PyQt6.QtWidgets import QMenuBar, QDialog, QFormLayout, QLineEdit, QDialogButtonBox, QMessageBox
 from PyQt6.QtGui import QIcon, QAction,QDesktopServices
 from PyQt6.QtCore import QUrl
-
+import sqlite3
+import os
 class MenuBar(QMenuBar):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -92,3 +93,56 @@ class MenuBar(QMenuBar):
         QDesktopServices.openUrl(url)
     def new_item_call(self):
         print("New Item")
+        class NewProductDialog(QDialog):
+            def __init__(self, parent=None):
+                super().__init__(parent)
+                self.setWindowTitle("Agregar nuevo producto global")
+                layout = QFormLayout(self)
+                self.name_edit = QLineEdit(self)
+                self.price_edit = QLineEdit(self)
+                self.desc_edit = QLineEdit(self)
+                layout.addRow("Nombre:", self.name_edit)
+                layout.addRow("Precio:", self.price_edit)
+                layout.addRow("Descripción:", self.desc_edit)
+                self.buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel, self)
+                self.buttons.accepted.connect(self.accept)
+                self.buttons.rejected.connect(self.reject)
+                layout.addWidget(self.buttons)
+
+            def get_data(self):
+                return self.name_edit.text(), self.price_edit.text(), self.desc_edit.text()
+
+        dialog = NewProductDialog(self.parent())
+        if dialog.exec():
+            name, price, descripcion = dialog.get_data()
+            if not name or not price:
+                QMessageBox.warning(self.parent(), "Campos requeridos", "Nombre y precio son obligatorios.")
+                return
+            try:
+                price = float(price)
+            except ValueError:
+                QMessageBox.warning(self.parent(), "Precio inválido", "El precio debe ser un número.")
+                return
+
+            db_path = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'added_products')
+            try:
+                conn = sqlite3.connect(db_path)
+                cursor = conn.cursor()
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS added_products (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT NOT NULL,
+                        price REAL NOT NULL,
+                        descripcion TEXT
+                    )
+                """)
+                cursor.execute("INSERT INTO added_products (name, price, descripcion) VALUES (?, ?, ?)",
+                            (name, price, descripcion))
+                conn.commit()
+                conn.close()
+                QMessageBox.information(self.parent(), "Éxito", "Producto agregado correctamente.")
+                # Si quieres refrescar el árbol automáticamente:
+                if hasattr(self.parent(), 'populate_tree_from_db'):
+                    self.parent().populate_tree_from_db()
+            except Exception as e:
+                QMessageBox.critical(self.parent(), "Error", f"No se pudo agregar el producto:\n{e}")

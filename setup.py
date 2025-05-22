@@ -1,7 +1,22 @@
 from setuptools import setup, find_packages
+import PyInstaller.__main__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
+
+PyInstaller.__main__.run([
+    '--name=KitchenSoftware',
+    '--onefile',
+    '--windowed',
+    '--noconfirm',
+    '--clean',
+    '--add-data=src/data/kitchen_main_db;src/data',
+    '--add-data=src/data/added_products;src/data',
+    '--add-data=src/data/dbdoor;src/data',
+    # ...otros recursos...
+    '__main__.py',
+])
+
 
 setup(
     name="UnitCostKitchen",
